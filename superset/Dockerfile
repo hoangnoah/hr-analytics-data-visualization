@@ -4,11 +4,11 @@ FROM apache/superset:548d543
 USER root
 RUN pip install sqlalchemy-trino psycopg2-binary flask_cors pyhive thrift thrift_sasl trino
 
-# Copy the entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
+# Copy the entrypoint script and set permissions
+COPY entrypoint.sh /app/
 
-# Set permissions to make it executable
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh && \
+    dos2unix /app/entrypoint.sh
 
 # Set the working directory
 WORKDIR /app

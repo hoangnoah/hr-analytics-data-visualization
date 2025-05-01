@@ -22,7 +22,7 @@ services:
 
   postgres-superset:
     image: postgres:13
-    container_name: postgres
+    container_name: postgres-superset
     environment:
       POSTGRES_DB: superset
       POSTGRES_USER: admin
@@ -33,7 +33,7 @@ services:
       - ./database/postgres-superset:/var/lib/postgresql/data
       - ./dataset:/dataset
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superset"]
+      test: ["CMD-SHELL", "pg_isready -U admin"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -49,7 +49,6 @@ services:
     ports:
       - "5050:80"
     volumes:
-      - ./database/pgadmin-data:/var/lib/pgadmin
       - ./dataset:/dataset
     depends_on:
       - postgres-superset
