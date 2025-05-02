@@ -10,18 +10,17 @@ services:
       PYTHONPATH: /app/pythonpath
     volumes:
       - ./superset/superset_config.py:/app/pythonpath/superset_config.py
-      - ./database/backup:/app/backup                         
-      - ./scripts:/app/scripts                                
+      - ./scripts:/app/scripts  
     depends_on:
       - postgres-superset
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8088/health || exit 1"]
+      test: [ "CMD-SHELL", "curl -f http://localhost:8088/health || exit 1" ]
       interval: 30s
       timeout: 5s
       retries: 5
     networks:
       - data_network
-    command: ["/bin/bash", "/app/scripts/init_superset.sh"]
+    command: [ "/bin/bash", "/app/scripts/init_superset.sh" ]
 
   postgres-superset:
     image: postgres:13
@@ -33,11 +32,11 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgres_data:/var/lib/postgresql/data                
+      - postgres_data:/var/lib/postgresql/data
       - ./dataset:/dataset
-      - ./database/backup:/docker-entrypoint-initdb.d         
+      - ./database/backup:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U superset"]
+      test: [ "CMD-SHELL", "pg_isready -U superset" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -53,7 +52,7 @@ services:
     ports:
       - "5050:80"
     volumes:
-      - pgadmin_data:/var/lib/pgadmin                         
+      - pgadmin_data:/var/lib/pgadmin
       - ./dataset:/dataset
     depends_on:
       - postgres-superset
