@@ -7,8 +7,7 @@ RUN pip install sqlalchemy-trino psycopg2-binary flask_cors pyhive thrift thrift
 # Copy the entrypoint script and set permissions
 COPY entrypoint.sh /app/
 
-RUN chmod +x /app/entrypoint.sh && \
-    dos2unix /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh 
 
 # Set the working directory
 WORKDIR /app

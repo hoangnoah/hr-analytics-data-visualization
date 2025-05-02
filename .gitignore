@@ -172,3 +172,17 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# PostgreSQL
+database/postgres-superset/*
+!database/backup/
+!database/backup/*.sql
+!database/backup/*.json
+!database/backup/*.sh
+
+# Superset
+superset/superset.db
+
+# Keep scripts
+!scripts/
+!scripts/*.sh
