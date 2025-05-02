@@ -10,7 +10,6 @@ services:
       PYTHONPATH: /app/pythonpath
     volumes:
       - ./superset/superset_config.py:/app/pythonpath/superset_config.py
-      - ./scripts:/app/scripts  
     depends_on:
       - postgres-superset
     healthcheck:

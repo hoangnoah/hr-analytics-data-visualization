@@ -21,12 +21,6 @@ superset fab create-admin \
 # Initialize Superset
 superset init || true
 
-# Import dashboards and charts if they exist
-if [ -d "/app/backup/charts" ] && [ -f "/app/backup/charts/charts_backup.json" ]; then
-    echo "Importing charts..."
-    superset import_dashboards -p /app/backup/charts/charts_backup.json || true
-fi
-
 # Start Superset
 echo "Starting Superset..."
 /usr/bin/run-server.sh
