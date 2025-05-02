@@ -1,4 +1,4 @@
-FROM apache/superset:548d543
+FROM apache/superset:latest
 
 # Install necessary dependencies
 USER root
@@ -8,8 +8,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Cài đặt apache-superset
+RUN pip install apache-superset
+
 # Copy the entrypoint script and set permissions
-COPY entrypoint.sh /app/
+COPY entrypoint.sh /app/entrypoint.sh 
 
 RUN chmod +x /app/entrypoint.sh 
 

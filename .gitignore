@@ -175,10 +175,11 @@ cython_debug/
 
 # PostgreSQL
 database/postgres-superset/*
-!database/backup/
-!database/backup/*.sql
-!database/backup/*.json
-!database/backup/*.sh
+
+# Giữ lại file export
+!superset/export/dashboards.json
+!superset/export/charts.json
+!superset/export/datasets.json
 
 # Superset
 superset/superset.db
