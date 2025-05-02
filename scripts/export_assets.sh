@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# Export dashboards
-echo "Exporting dashboards..."
-superset export_dashboards -f /app/backup/dashboards_backup.json
+# Create backup directory if not exists
+mkdir -p /app/backup/charts
 
-# Export charts
+# Export individual charts
 echo "Exporting charts..."
-superset export_charts -f /app/backup/charts_backup.json
+superset export_dashboards --dashboard-file /app/backup/charts/charts_backup.json
 
-# Make sure the files are accessible
-chmod 644 /app/backup/*.json 
+# Make files accessible
+chmod 644 /app/backup/charts/*.json
+
+echo "Charts have been exported to database/backup/charts/" 

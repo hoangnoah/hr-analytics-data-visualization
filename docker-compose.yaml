@@ -43,21 +43,6 @@ services:
     networks:
       - data_network
 
-  backup-service:
-    build: ./superset
-    volumes:
-      - ./database/backup:/app/backup
-      - ./scripts:/app/scripts
-    depends_on:
-      - superset
-    environment:
-      SUPERSET_ENV: development
-      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
-      PYTHONPATH: /app/pythonpath
-    command: ["watch", "-n", "3600", "/app/scripts/export_assets.sh"]
-    networks:
-      - data_network
-
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
