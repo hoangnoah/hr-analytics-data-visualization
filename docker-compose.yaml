@@ -10,8 +10,8 @@ services:
       PYTHONPATH: /app/pythonpath
     volumes:
       - ./superset/superset_config.py:/app/pythonpath/superset_config.py
-      - ./database/backup:/app/backup
-      - ./scripts:/app/scripts
+      - ./database/backup:/app/backup                         
+      - ./scripts:/app/scripts                                
     depends_on:
       - postgres-superset
     healthcheck:
@@ -25,6 +25,7 @@ services:
 
   postgres-superset:
     image: postgres:13
+    container_name: postgres-superset
     environment:
       POSTGRES_DB: superset
       POSTGRES_USER: superset
@@ -32,9 +33,9 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./database/postgres-superset:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data                
       - ./dataset:/dataset
-      - ./database/backup:/docker-entrypoint-initdb.d
+      - ./database/backup:/docker-entrypoint-initdb.d         
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U superset"]
       interval: 10s
@@ -52,6 +53,7 @@ services:
     ports:
       - "5050:80"
     volumes:
+      - pgadmin_data:/var/lib/pgadmin                         
       - ./dataset:/dataset
     depends_on:
       - postgres-superset
@@ -61,3 +63,7 @@ services:
 networks:
   data_network:
     driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
