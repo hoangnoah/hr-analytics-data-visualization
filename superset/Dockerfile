@@ -2,7 +2,11 @@ FROM apache/superset:548d543
 
 # Install necessary dependencies
 USER root
-RUN pip install sqlalchemy-trino psycopg2-binary flask_cors pyhive thrift thrift_sasl trino
+RUN apt-get update && \
+    apt-get install -y netcat-traditional && \
+    pip install sqlalchemy-trino psycopg2-binary flask_cors pyhive thrift thrift_sasl trino && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy the entrypoint script and set permissions
 COPY entrypoint.sh /app/

@@ -1,25 +1,32 @@
 #!/bin/bash
-set -e
 
-# Upgrade the database
-superset db upgrade
-
-# Create an admin user if it doesn't exist
-superset fab create-admin --username admin --firstname Admin --lastname User --email admin@superset.com --password admin || echo "Admin user already exists"
+# Wait for database to be ready
+echo "Waiting for database to be ready..."
+while ! nc -z postgres-superset 5432; do
+  sleep 1
+done
 
 # Initialize Superset
-superset init
+echo "Initializing Superset..."
+superset db upgrade
+
+# Create admin user if not exists
+superset fab create-admin \
+    --username admin \
+    --firstname Superset \
+    --lastname Admin \
+    --email admin@superset.com \
+    --password admin || true
+
+# Initialize Superset
+superset init || true
 
 # Import dashboards and charts if they exist
-if [ -f "/app/backup/dashboards_backup.json" ]; then
-    echo "Importing dashboards..."
-    superset import_dashboards -p /app/backup/dashboards_backup.json
+if [ -d "/app/backup/charts" ] && [ -f "/app/backup/charts/charts_backup.json" ]; then
+    echo "Importing charts..."
+    superset import_dashboards -p /app/backup/charts/charts_backup.json || true
 fi
 
-if [ -f "/app/backup/charts_backup.json" ]; then
-    echo "Importing charts..."
-    superset import_charts -p /app/backup/charts_backup.json
-fi 
-
-# Start the Superset web server
-gunicorn --bind 0.0.0.0:8088 "superset.app:create_app()"
+# Start Superset
+echo "Starting Superset..."
+/usr/bin/run-server.sh
