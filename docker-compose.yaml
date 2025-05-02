@@ -22,7 +22,6 @@ services:
 
   postgres-superset:
     image: postgres:13
-    container_name: postgres-superset
     environment:
       POSTGRES_DB: superset
       POSTGRES_USER: superset
