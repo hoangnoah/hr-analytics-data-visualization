@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS hr_schema CASCADE;
+
 CREATE SCHEMA IF NOT EXISTS hr_schema;
 
 CREATE TABLE hr_schema.hr_data (
