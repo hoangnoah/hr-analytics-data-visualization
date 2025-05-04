@@ -4,19 +4,23 @@ CREATE TABLE hr_schema.hr_data (
     age INT,
     attrition VARCHAR(10),
     businesstravel VARCHAR(50),
+    dailyrate INT,
     department VARCHAR(100),
     distancefromhome INT,
     education INT,
     educationfield VARCHAR(100),
+    employeecount INT,
     employeenumber INT PRIMARY KEY,
     environmentsatisfaction INT,
     gender VARCHAR(10),
+    hourlyrate INT,
     jobinvolvement INT,
     joblevel INT,
     jobrole VARCHAR(100),
     jobsatisfaction INT,
     maritalstatus VARCHAR(20),
     monthlyincome INT,
+    monthlyrate INT,
     numcompaniesworked INT,
     over18 CHAR(1),
     overtime VARCHAR(5),
@@ -32,7 +36,7 @@ CREATE TABLE hr_schema.hr_data (
     yearsincurrentrole INT,
     yearssincelastpromotion INT,
     yearswithcurrmanager INT,
-    date_of_resignation TIMESTAMP
+    dateofresignation TIMESTAMP
 );
 
 COPY hr_schema.hr_data

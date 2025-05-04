@@ -3,7 +3,7 @@ FROM apache/superset:latest
 # Install necessary dependencies
 USER root
 RUN apt-get update && \
-    apt-get install -y netcat-traditional && \
+    apt-get install -y netcat-traditional dos2unix && \
     pip install sqlalchemy-trino psycopg2-binary flask_cors pyhive thrift thrift_sasl trino && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -11,7 +11,8 @@ RUN apt-get update && \
 # Copy the entrypoint script and set permissions
 COPY entrypoint.sh /app/entrypoint.sh 
 
-RUN chmod +x /app/entrypoint.sh 
+RUN chmod +x /app/entrypoint.sh && \
+    chmod +x /app/entrypoint.sh
 
 # Set the working directory
 WORKDIR /app
